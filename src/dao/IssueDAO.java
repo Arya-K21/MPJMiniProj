@@ -13,6 +13,15 @@ public class IssueDAO {
     private static int nextIssueId = 1001;
 
     public static int issueBook(Issue issue) throws Exception {
+        // Validation: Check if book exists and has available copies
+        Book book = BookDAO.getBookById(issue.getBookId());
+        if (book == null) {
+            throw new Exception("Book not found with ID: " + issue.getBookId());
+        }
+        if (book.getAvailableCopies() <= 0) {
+            throw new Exception("NO_COPIES");
+        }
+
         Connection con = DBConnection.getConnection();
         
         if (con == null) {
@@ -35,6 +44,10 @@ public class IssueDAO {
 
             issue.setIssueId(nextIssueId++);
             mockIssues.add(issue);
+            
+            // Update book quantity in mock mode
+            BookDAO.updateAvailableCopies(issue.getBookId(), -1);
+            
             return issue.getIssueId();
         }
 
@@ -56,6 +69,12 @@ public class IssueDAO {
         
         rs.close();
         ps.close();
+        
+        // Update book quantity in DB mode
+        if (issueId > 0) {
+            BookDAO.updateAvailableCopies(issue.getBookId(), -1);
+        }
+        
         con.close();
         
         return issueId;
@@ -70,27 +89,48 @@ public class IssueDAO {
                 if (issue.getIssueId() == issueId && issue.getReturnDate() == null) {
                     issue.setReturnDate(returnDate);
                     issue.setFine(fine);
+                    
+                    // Update book quantity in mock mode
+                    BookDAO.updateAvailableCopies(issue.getBookId(), 1);
+                    
                     return issue;
                 }
             }
-            // Issue not found in memory (e.g. after Tomcat restart) — still allow return gracefully
-            System.out.println("[INFO] Issue ID " + issueId + " not in memory (restart?). Allowing return anyway.");
-            Issue ghost = new Issue();
-            ghost.setIssueId(issueId);
-            ghost.setReturnDate(returnDate);
-            ghost.setFine(fine);
-            return ghost;
+            return null;
         }
 
-        PreparedStatement ps2 = con.prepareStatement("UPDATE issue SET return_date=?, fine=? WHERE issue_id=?");
-        ps2.setDate(1, returnDate);
-        ps2.setInt(2, fine);
-        ps2.setInt(3, issueId);
-        ps2.executeUpdate();
-        ps2.close();
-        con.close();
+        // DB Mode: First get the book_id to update quantity later
+        int bookId = 0;
+        PreparedStatement psFetch = con.prepareStatement("SELECT book_id FROM issue WHERE issue_id = ? AND return_date IS NULL");
+        psFetch.setInt(1, issueId);
+        ResultSet rs = psFetch.executeQuery();
+        if (rs.next()) {
+            bookId = rs.getInt("book_id");
+        }
+        rs.close();
+        psFetch.close();
+
+        if (bookId == 0) {
+            con.close();
+            return null; // Issue not found or already returned
+        }
+
+        PreparedStatement psUpdate = con.prepareStatement("UPDATE issue SET return_date=?, fine=? WHERE issue_id=?");
+        psUpdate.setDate(1, returnDate);
+        psUpdate.setInt(2, fine);
+        psUpdate.setInt(3, issueId);
+        int rows = psUpdate.executeUpdate();
+        psUpdate.close();
+
+        if (rows > 0) {
+            // Update book quantity in DB mode
+            BookDAO.updateAvailableCopies(bookId, 1);
+            con.close();
+            return new Issue(); // Success indicator
+        }
         
-        return new Issue(); // Just returning a non-null object to indicate success
+        con.close();
+        return null;
     }
 
     public static Date getDueDate(int issueId) throws Exception {

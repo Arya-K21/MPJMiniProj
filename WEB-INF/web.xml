@@ -5,7 +5,7 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-    <!-- Book Servlet (existing) -->
+    <!-- Book Servlet -->
     <servlet>
         <servlet-name>BookServlet</servlet-name>
         <servlet-class>controller.BookServlet</servlet-class>
@@ -16,7 +16,7 @@
         <url-pattern>/BookServlet</url-pattern>
     </servlet-mapping>
 
-    <!-- Login Servlet (NEW) -->
+    <!-- Login Servlet -->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>controller.LoginServlet</servlet-class>
@@ -27,7 +27,7 @@
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
 
-    <!-- Issue Book Servlet (NEW) -->
+    <!-- Issue Book Servlet -->
     <servlet>
         <servlet-name>IssueServlet</servlet-name>
         <servlet-class>controller.IssueServlet</servlet-class>
@@ -38,7 +38,7 @@
         <url-pattern>/IssueServlet</url-pattern>
     </servlet-mapping>
 
-    <!-- Return Book Servlet (NEW) -->
+    <!-- Return Book Servlet -->
     <servlet>
         <servlet-name>ReturnServlet</servlet-name>
         <servlet-class>controller.ReturnServlet</servlet-class>
@@ -47,6 +47,17 @@
     <servlet-mapping>
         <servlet-name>ReturnServlet</servlet-name>
         <url-pattern>/ReturnServlet</url-pattern>
+    </servlet-mapping>
+
+    <!-- Logout Servlet -->
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>controller.LogoutServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
 
 </web-app>

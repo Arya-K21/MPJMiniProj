@@ -49,18 +49,14 @@ CREATE TABLE IF NOT EXISTS issue (
     book_id INT NOT NULL,
     issue_date DATE NOT NULL,
     due_date DATE,
+    return_date DATE,
+    fine INT DEFAULT 0,
     FOREIGN KEY (student_id) REFERENCES student(student_id),
     FOREIGN KEY (book_id) REFERENCES book(id)
 );
 
--- Return Table
-CREATE TABLE IF NOT EXISTS return_record (
-    return_id INT PRIMARY KEY AUTO_INCREMENT,
-    issue_id INT NOT NULL,
-    return_date DATE NOT NULL,
-    fine_amount DECIMAL(10, 2),
-    FOREIGN KEY (issue_id) REFERENCES issue(issue_id)
-);
+-- Note: return_record table is replaced by consolidating into the issue table
+-- to simplify the DAO logic.
 
 -- Insert sample admin user
 INSERT INTO admin (admin_id, password, name) VALUES ('admin', 'admin', 'Administrator');

@@ -20,6 +20,9 @@ public class LoginServlet extends HttpServlet {
             // If database is not available, use demo credentials
             if (con == null) {
                 if ("admin".equals(user) && "admin".equals(pass)) {
+                    HttpSession session = req.getSession();
+                    session.setAttribute("admin_id", "admin");
+                    session.setAttribute("admin_name", "Demo Administrator");
                     res.sendRedirect("dashboard.jsp");
                 } else {
                     res.getWriter().println("<h3 style='color:red; text-align:center; margin-top:50px;'>Invalid Login Credentials!</h3>");
@@ -37,6 +40,9 @@ public class LoginServlet extends HttpServlet {
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()){
+                HttpSession session = req.getSession();
+                session.setAttribute("admin_id", rs.getString("admin_id"));
+                session.setAttribute("admin_name", rs.getString("name"));
                 res.sendRedirect("dashboard.jsp");
             } else {
                 res.getWriter().println("<h3 style='color:red; text-align:center; margin-top:50px;'>Invalid Login Credentials!</h3>");

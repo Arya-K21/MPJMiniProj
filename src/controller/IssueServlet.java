@@ -21,7 +21,12 @@ public class IssueServlet extends HttpServlet {
             int issueId = IssueDAO.issueBook(issue);
             res.sendRedirect("issueBook.jsp?issueId=" + issueId);
         } catch(Exception e){
-            e.printStackTrace();
+            if ("NO_COPIES".equals(e.getMessage())) {
+                res.sendRedirect("issueBook.jsp?error=no_copies");
+            } else {
+                e.printStackTrace();
+                res.sendRedirect("issueBook.jsp?error=unknown&msg=" + e.getMessage());
+            }
         }
     }
 }
