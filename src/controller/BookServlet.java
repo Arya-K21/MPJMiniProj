@@ -18,7 +18,7 @@ public class BookServlet extends HttpServlet {
 
             int authorId = Integer.parseInt(req.getParameter("author_id"));
             int categoryId = Integer.parseInt(req.getParameter("category_id"));
-            int copies = Integer.parseInt(req.getParameter("copies"));
+            int copies = Integer.parseInt(req.getParameter("available_copies"));
 
             Book b = new Book();
             //b.setId(id);
@@ -26,6 +26,7 @@ public class BookServlet extends HttpServlet {
             b.setAuthorId(authorId);
             b.setCategoryId(categoryId);
             b.setAvailableCopies(copies);
+            b.setTotalCopies(copies);
 
             BookDAO.addBook(b);
 

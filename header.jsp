@@ -6,7 +6,7 @@
 %>
 <div class="top-bar">
     <div class="search-bar">
-        <span>&#128269;</span>
+        <span><i class="fa-solid fa-search"></i></span>
         <input type="text" placeholder="Search books, students...">
     </div>
 

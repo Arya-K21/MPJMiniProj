@@ -76,13 +76,14 @@ public class BookDAO {
             System.out.println("[OK] DB CONNECTED");
 
             PreparedStatement ps = con.prepareStatement(
-                "INSERT INTO book (title, available_copies, author_id, category_id) VALUES (?, ?, ?, ?)"
+                "INSERT INTO book (title, available_copies, copies, author_id, category_id) VALUES (?, ?, ?, ?, ?)"
             );
 
             ps.setString(1, b.getTitle());
             ps.setInt(2, b.getAvailableCopies());
-            ps.setInt(3, b.getAuthorId());
-            ps.setInt(4, b.getCategoryId());
+            ps.setInt(3, b.getTotalCopies());
+            ps.setInt(4, b.getAuthorId());
+            ps.setInt(5, b.getCategoryId());
 
             int rows = ps.executeUpdate();
 

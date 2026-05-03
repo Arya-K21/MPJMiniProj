@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Books Collection - SeaLibrary</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <%@ page import="java.util.*, dao.BookDAO, model.Book" %>
 </head>
 <body>
@@ -78,7 +79,7 @@
                     } else {
                 %>
                     <div class="alert alert-info">
-                        <span>ℹ️</span>
+                        <span><i class="fa-solid fa-circle-info" style="color: #0ea5e9;"></i></span>
                         <div>No books found in the library. <a href="addBook.jsp" style="font-weight: 600;">Add your first book</a></div>
                     </div>
                 <%
@@ -86,7 +87,7 @@
                 } catch(Exception e) {
                 %>
                     <div class="alert alert-error">
-                        <span>❌</span>
+                        <span><i class="fa-solid fa-circle-xmark" style="color: #ef4444;"></i></span>
                         <div>Error loading books: <%= e.getMessage() %></div>
                     </div>
                 <%

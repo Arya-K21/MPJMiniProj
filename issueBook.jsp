@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Issue Book - SeaLibrary</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="app-container">
@@ -26,7 +27,7 @@
                     if(issueId != null) {
                     %>
                         <div class="alert alert-success">
-                            <span>✅</span>
+                            <span><i class="fa-solid fa-circle-check" style="color: #10b981;"></i></span>
                             <div>
                                 <strong>Success!</strong> Your Issue ID is: <strong><%= issueId %></strong>
                             </div>
@@ -44,7 +45,7 @@
                         }
                     %>
                         <div class="alert alert-error">
-                            <span>❌</span>
+                            <span><i class="fa-solid fa-circle-xmark" style="color: #ef4444;"></i></span>
                             <div>
                                 <strong>Issue Failed!</strong> <%= msg %>
                             </div>

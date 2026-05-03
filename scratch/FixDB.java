@@ -4,42 +4,18 @@ public class FixDB {
     public static void main(String[] args) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/library_db",
-                "root",
-                "root"
-            );
+            Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_db", "root", "root");
+            Statement s = c.createStatement();
             
-            if (con == null) {
-                System.out.println("Connection failed");
-                return;
-            }
+            // Add missing categories
+            s.execute("INSERT IGNORE INTO category (category_id, category_name) VALUES (4, 'History'), (5, 'Biography'), (6, 'Self-Help')");
             
-            System.out.println("Connection successful");
-            Statement st = con.createStatement();
+            // Add some generic authors so IDs 4, 5, 6, 7 exist
+            s.execute("INSERT IGNORE INTO author (author_id, author_name, email) VALUES (4, 'Jane Austen', 'jane@example.com'), (5, 'Mark Twain', 'mark@example.com'), (6, 'Agatha Christie', 'agatha@example.com'), (7, 'Stephen King', 'stephen@example.com'), (8, 'Arthur Conan Doyle', 'arthur@example.com')");
             
-            // Check if columns exist
-            DatabaseMetaData metaData = con.getMetaData();
-            ResultSet rs = metaData.getColumns(null, null, "issue", "return_date");
-            if (!rs.next()) {
-                System.out.println("Adding return_date to issue table...");
-                st.executeUpdate("ALTER TABLE issue ADD COLUMN return_date DATE");
-            } else {
-                System.out.println("return_date already exists");
-            }
-            
-            rs = metaData.getColumns(null, null, "issue", "fine");
-            if (!rs.next()) {
-                System.out.println("Adding fine to issue table...");
-                st.executeUpdate("ALTER TABLE issue ADD COLUMN fine INT DEFAULT 0");
-            } else {
-                System.out.println("fine already exists");
-            }
-            
-            st.close();
-            con.close();
-            System.out.println("DB Fix completed");
-        } catch (Exception e) {
+            System.out.println("SUCCESS: Missing categories and authors have been added to the database!");
+            c.close();
+        } catch(Exception e) {
             e.printStackTrace();
         }
     }

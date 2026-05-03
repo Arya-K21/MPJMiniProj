@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Book - SeaLibrary</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="app-container">
@@ -33,13 +34,31 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="author_id">Author ID</label>
-                            <input type="number" id="author_id" name="author_id" placeholder="Enter author ID" required>
+                            <label for="author_id">Author</label>
+                            <select id="author_id" name="author_id" required>
+                                <option value="" disabled selected>-- Select an Author --</option>
+                                <option value="1">J.K. Rowling</option>
+                                <option value="2">George Orwell</option>
+                                <option value="3">J.R.R. Tolkien</option>
+                                <option value="4">Jane Austen</option>
+                                <option value="5">Mark Twain</option>
+                                <option value="6">Agatha Christie</option>
+                                <option value="7">Stephen King</option>
+                                <option value="8">Arthur Conan Doyle</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="category_id">Category ID</label>
-                            <input type="number" id="category_id" name="category_id" placeholder="Enter category ID" required>
+                            <label for="category_id">Category</label>
+                            <select id="category_id" name="category_id" required>
+                                <option value="" disabled selected>-- Select a Category --</option>
+                                <option value="1">Fiction</option>
+                                <option value="2">Non-Fiction</option>
+                                <option value="3">Science &amp; Technology</option>
+                                <option value="4">History</option>
+                                <option value="5">Biography</option>
+                                <option value="6">Self-Help</option>
+                            </select>
                         </div>
 
                         <div style="display: flex; gap: 1rem; margin-top: 2rem;">

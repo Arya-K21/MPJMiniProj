@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Library Management System</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="login-page">
@@ -19,7 +20,7 @@
         <div class="login-right">
             <div class="login-header">
                 <div class="logo">
-                    <div class="logo-icon">📚</div>
+                    <div class="logo-icon"><i class="fa-solid fa-book-open"></i></div>
                     <span>Library.io</span>
                 </div>
                 <h1>Login</h1>
